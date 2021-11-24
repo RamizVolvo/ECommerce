@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using ECommerce;
+using ECommerce.Orders.PactTests;
 using ECommerce.Orders.PactTests.XUnitHelpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
@@ -20,22 +22,28 @@ namespace Ecommerce.Orders.Tests
         private readonly bool isCI = true;
         public ProviderApiTests(ITestOutputHelper output)
         {
-           
-           // _providerUri = "http://localhost:49842";
-            _pactServiceUri = "http://localhost:49842";
+
+            System.Diagnostics.Debug.WriteLine("Initializing!");
+            // _providerUri = "http://localhost:44374";
+            _pactServiceUri = "http://localhost:44374";
             outputHelper = output;
 
-            /*_webHost = WebHost.CreateDefaultBuilder()
+            _webHost = WebHost.CreateDefaultBuilder()
                 .UseUrls(_pactServiceUri)
+                .UseStartup<Startup>()
                 .Build();
-
-            _webHost.Start();*/
+           
+            
         }
 
         [Fact]
         public void EnsureProviderApiHonoursPactWithConsumer()
         {
-            const string serviceUri = "https://localhost:44374";
+            const string serviceUri = "http://localhost:44374";
+            
+                _webHost.Start();
+                System.Diagnostics.Debug.WriteLine("Server started!!");
+           
 
             var pactUriOptions = new PactUriOptions()
             .SetBasicAuthentication("pactbroker", "pactbroker");
@@ -54,23 +62,24 @@ namespace Ecommerce.Orders.Tests
                     Verbose = true //Output verbose verification logs to the test output
                 };
 
-           
-                //Act / Assert
-                IPactVerifier pactVerifier = new PactVerifier(config);
 
-               
+            //Act / Assert
+            IPactVerifier pactVerifier = new PactVerifier(config);
+
+
                 pactVerifier
-                  //  .ProviderState($"{serviceUri}/provider-states")
+                    //  .ProviderState($"{serviceUri}/provider-states")
                     .ServiceProvider("DotNetProductService", serviceUri)
                     .HonoursPactWith("FrontendWebsite")
-                    
+
                     //or
-                  //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest") //You can specify a http or https uri
-                                                                                                           //or
-                  //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest", pactUriOptions) //With options decribed above
-                                                                                                                           //or (if you're using the Pact Broker, you can use the various different features, including pending pacts)
+                    //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest") //You can specify a http or https uri
+                    //or
+                    //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest", pactUriOptions) //With options decribed above
+                    //or (if you're using the Pact Broker, you can use the various different features, including pending pacts)
                     .PactBroker("http://localhost:80", uriOptions: pactUriOptions)
                     .Verify();
+            
             
         
     }
@@ -85,7 +94,8 @@ namespace Ecommerce.Orders.Tests
             {
                 if (disposing)
                 {
-                    
+                    _webHost.StopAsync().GetAwaiter().GetResult();
+                    _webHost.Dispose();
                 }
 
                 disposedValue = true;
