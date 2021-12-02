@@ -32,21 +32,23 @@ namespace Ecommerce.Orders.Tests
                 .UseUrls(_pactServiceUri)
                 .UseStartup<Startup>()
                 .Build();
-           
-            
+
+
         }
 
         [Fact]
         public void EnsureProviderApiHonoursPactWithConsumer()
         {
             const string serviceUri = "http://localhost:44374";
-            
-                _webHost.Start();
-                System.Diagnostics.Debug.WriteLine("Server started!!");
-           
+
+            _webHost.Start();
+            System.Diagnostics.Debug.WriteLine("Server started!!");
+
 
             var pactUriOptions = new PactUriOptions()
-            .SetBasicAuthentication("pactbroker", "pactbroker");
+           // .SetBasicAuthentication("pactbroker", "pactbroker");
+           .SetBearerAuthentication("9P_792asrla1UgihQptOjg");
+
 
             var config = new PactVerifierConfig
             {
@@ -58,35 +60,38 @@ namespace Ecommerce.Orders.Tests
                     {
                         new XUnitOutput(outputHelper)
                     },
-                 //   CustomHeaders = new Dictionary<string, string> { { "Authorization", "Basic VGVzdA==" } }, //This allows the user to set request headers that will be sent with every request the verifier sends to the provider
-                    Verbose = true //Output verbose verification logs to the test output
-                };
+                //   CustomHeaders = new Dictionary<string, string> { { "Authorization", "Basic VGVzdA==" } }, //This allows the user to set request headers that will be sent with every request the verifier sends to the provider
+                Verbose = true, //Output verbose verification logs to the test output
+
+
+            };
 
 
             //Act / Assert
             IPactVerifier pactVerifier = new PactVerifier(config);
 
 
-                pactVerifier
-                    //  .ProviderState($"{serviceUri}/provider-states")
-                    .ServiceProvider("DotNetProductService", serviceUri)
-                    .HonoursPactWith("FrontendWebsite")
+            pactVerifier
+                //  .ProviderState($"{serviceUri}/provider-states")
+                .ServiceProvider("DotNetProductService", serviceUri)
+                .HonoursPactWith("FrontendWebsite")
 
-                    //or
-                    //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest") //You can specify a http or https uri
-                    //or
-                    //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest", pactUriOptions) //With options decribed above
-                    //or (if you're using the Pact Broker, you can use the various different features, including pending pacts)
-                    .PactBroker("http://localhost:80", uriOptions: pactUriOptions)
-                    .Verify();
-            
-            
-        
-    }
+
+                //or
+                //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest") //You can specify a http or https uri
+                //or
+                //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest", pactUriOptions) //With options decribed above
+                //or (if you're using the Pact Broker, you can use the various different features, including pending pacts)
+                .PactBroker("https://volvo.pactflow.io", uriOptions: pactUriOptions, providerVersionTags: new[] { "prod", "test" })
+                .Verify();
+
+
+
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
-        
+
 
         protected virtual void Dispose(bool disposing)
         {

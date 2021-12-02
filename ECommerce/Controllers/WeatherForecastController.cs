@@ -28,11 +28,11 @@ namespace ECommerce.Controllers
         {
             return new
             {
-                id=id,
+                id = id,
                 type = "CREDIT_CARD",
                 name = "28 Degrees"
             };
-            
+
         }
     }
 }
