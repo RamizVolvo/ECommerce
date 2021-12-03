@@ -54,7 +54,7 @@ namespace Ecommerce.Orders.Tests
             {
 
 
-                ProviderVersion = "1", //NOTE: Setting a provider version is required for publishing verification results
+                ProviderVersion = "1.0", //NOTE: Setting a provider version is required for publishing verification results
                 PublishVerificationResults = isCI,
                 Outputters = new List<IOutput> //NOTE: We default to using a ConsoleOutput, however xUnit 2 does not capture the console output, so a custom outputter is required.
                     {
@@ -82,7 +82,7 @@ namespace Ecommerce.Orders.Tests
                 //or
                 //  .PactUri("http://pact-broker/pacts/provider/Something%20Api/consumer/Consumer/latest", pactUriOptions) //With options decribed above
                 //or (if you're using the Pact Broker, you can use the various different features, including pending pacts)
-                .PactBroker("https://volvo.pactflow.io", uriOptions: pactUriOptions, providerVersionTags: new[] { "prod", "test" })
+                .PactBroker("https://volvo.pactflow.io", uriOptions: pactUriOptions, providerVersionTags: new[] { "master", "test" }, consumerVersionTags: new[] { "master", "test" })
                 .Verify();
 
 
