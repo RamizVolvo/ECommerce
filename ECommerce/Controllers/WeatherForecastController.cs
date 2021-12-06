@@ -23,7 +23,7 @@ namespace ECommerce.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/product/{id}")]
         public Object Get(string id)
         {
             return new
@@ -32,6 +32,22 @@ namespace ECommerce.Controllers
                 type = "CREDIT_CARD",
                 name = "28 Degrees"
             };
+
+        }
+
+        [HttpGet]
+        public Object Products()
+        {
+            return new[]{new {
+                id = 1,
+                type = "CREDIT_CARD",
+                name = "28 Degrees"
+            },new {
+                id = 2,
+                type = "CREDIT_CARD",
+                name = "Apple"
+            }}
+           ;
 
         }
     }
