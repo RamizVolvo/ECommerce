@@ -1,0 +1,2948 @@
+---
+openapi: 3.0.1
+info:
+  title: 'Fleet Accounts Administration '
+  description: API to manage the administration of fleet accounts.<br /><a href='https://intranet.volvocars.net/sites/vccapi/apiconsumers/SitePages/Fleet-Account-Administration-API---Consumer-Guideli.aspx'
+    target='_blank'>Consumer Guide</a><br /><br /><a href='https://intranet.volvocars.net/sites/vccapi/apiconsumers/SitePages/Fleet-Accouns.aspx'
+    target='_blank'>Fleet Accounts Event Broadcasts</a>
+  version: '1'
+paths:
+  "/v1/fleetaccounts/{fleetAccountId}/agreements":
+    get:
+      tags:
+      - Agreement
+      summary: List Fleet Agreements
+      description: "Used to get a list of the agreements related to the fleet account.
+        The list output is according to VCC Cursor pagination specs.   <br />\r\nRequired
+        Role(s): Fleet.Account.Agreement.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: after
+        in: query
+        description: ''
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: limit
+        in: query
+        description: ''
+        schema:
+          type: integer
+          description: ''
+          format: int32
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.agreementlist.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.agreementlist.v1+json:
+              schema:
+                "$ref": "#/components/schemas/AgreementListV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.agreementlist+json:
+              schema:
+                "$ref": "#/components/schemas/AgreementListV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/agreements/{agreementId}":
+    put:
+      tags:
+      - Agreement
+      summary: Update Agreement
+      description: "Used to update the details of an agreement <br />\r\nRequired
+        Role(s): Fleet.Account.Agreement.Write <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: agreementId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          format: uuid
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.agreementupdateresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/vnd.volvocars.api.fleet.accounts.administration.agreementupdaterequest.v1+json:
+            schema:
+              "$ref": "#/components/schemas/AgreementUpdateRequestV1"
+          application/vnd.volvocars.api.fleet.accounts.administration.agreementupdaterequest+json:
+            schema:
+              "$ref": "#/components/schemas/AgreementUpdateRequestV1"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.agreementupdateresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/AgreementUpdateResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.agreementupdateresponse+json:
+              schema:
+                "$ref": "#/components/schemas/AgreementUpdateResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '415':
+          description: UnsupportedMediaType
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts":
+    get:
+      tags:
+      - FleetAdministration
+      summary: List Fleet Accounts
+      description: "Used to get a list of all accounts in a paginated fashion <br
+        />\r\nRequired Role(s): Fleet.Account.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: after
+        in: query
+        description: ''
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: limit
+        in: query
+        description: ''
+        schema:
+          type: integer
+          description: ''
+          format: int32
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountlist.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountlist.v1+json:
+              schema:
+                "$ref": "#/components/schemas/FleetAccountListV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountlist+json:
+              schema:
+                "$ref": "#/components/schemas/FleetAccountListV1"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}":
+    get:
+      tags:
+      - FleetAdministration
+      summary: Get Fleet Account
+      description: "Used to get details of a fleet-account specified by id value <br
+        />\r\nRequired Role(s): Fleet.Account.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.fleetaccount.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.fleetaccount.v1+json:
+              schema:
+                "$ref": "#/components/schemas/FleetAccountV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.fleetaccount+json:
+              schema:
+                "$ref": "#/components/schemas/FleetAccountV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+    put:
+      tags:
+      - FleetAdministration
+      summary: Update Fleet Account
+      description: "Used to update the details of a fleet account,  only some values
+        can be updated such as status <br />\r\nRequired Role(s): Fleet.Account.Write
+        <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountupdaterequest.v1+json:
+            schema:
+              "$ref": "#/components/schemas/FleetAccountUpdateRequestV1"
+          application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountupdaterequest+json:
+            schema:
+              "$ref": "#/components/schemas/FleetAccountUpdateRequestV1"
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+            text/json:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '415':
+          description: UnsupportedMediaType
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/organizational-units":
+    get:
+      tags:
+      - FleetAdministration
+      summary: List Organizational Units
+      description: "Used to get a list of the organizational units of the specified
+        fleet account.  The list output is according to VCC Cursor pagination specs.
+        <br />\r\nRequired Role(s): Fleet.Account.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: after
+        in: query
+        description: ''
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: limit
+        in: query
+        description: ''
+        schema:
+          type: integer
+          description: ''
+          format: int32
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.organizationalunitlist.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.organizationalunitlist.v1+json:
+              schema:
+                "$ref": "#/components/schemas/OrganizationalUnitListV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.organizationalunitlist+json:
+              schema:
+                "$ref": "#/components/schemas/OrganizationalUnitListV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/search":
+    post:
+      tags:
+      - FleetAdministration
+      summary: Search Fleet Accounts
+      description: "Used to get a list of all fleet accounts matching the search criteria
+        <br />\r\nRequired Role(s): Fleet.Account.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: after
+        in: query
+        description: ''
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: limit
+        in: query
+        description: ''
+        schema:
+          type: integer
+          description: ''
+          format: int32
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountlist.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountsearchrequest.v1+json:
+            schema:
+              "$ref": "#/components/schemas/FleetAccountSearchRequestV1"
+          application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountsearchrequest+json:
+            schema:
+              "$ref": "#/components/schemas/FleetAccountSearchRequestV1"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountlist.v1+json:
+              schema:
+                "$ref": "#/components/schemas/FleetAccountListV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.fleetaccountlist+json:
+              schema:
+                "$ref": "#/components/schemas/FleetAccountListV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '415':
+          description: UnsupportedMediaType
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/invites":
+    post:
+      tags:
+      - Invites
+      summary: Send Invite
+      description: "Used to initiate invite e-mail send out to an e-mail address for
+        the specified fleet account <br />\r\nRequired Role(s): Fleet.Account.Invite.Send
+        <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.createinviteresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/vnd.volvocars.api.fleet.accounts.administration.createinviterequest.v1+json:
+            schema:
+              "$ref": "#/components/schemas/CreateInviteRequestV1"
+          application/vnd.volvocars.api.fleet.accounts.administration.createinviterequest+json:
+            schema:
+              "$ref": "#/components/schemas/CreateInviteRequestV1"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.createinviteresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/CreateInviteResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.createinviteresponse+json:
+              schema:
+                "$ref": "#/components/schemas/CreateInviteResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '415':
+          description: UnsupportedMediaType
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/risk-assessments":
+    get:
+      tags:
+      - RiskAssessment
+      summary: List Risk Assessment Requests
+      description: "Used to a get recent list of previously made risk assessment requests
+        <br />\r\nRequired Role(s): Fleet.Account.Risk.Assessment.Read <br />.  Claims:[none
+        specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: Fleet Account ID - indetfier of which fleet account to access
+        required: true
+        schema:
+          type: string
+          description: Fleet Account ID - indetfier of which fleet account to access
+          nullable: true
+      - name: after
+        in: query
+        description: optional offset identifier,  if available the items coming after
+          the offset-value in the sort-order is listed
+        schema:
+          type: string
+          description: optional offset identifier,  if available the items coming
+            after the offset-value in the sort-order is listed
+          nullable: true
+      - name: limit
+        in: query
+        description: optional limit value representing how many items are available
+          in a single result-set.
+        schema:
+          type: integer
+          description: optional limit value representing how many items are available
+            in a single result-set.
+          format: int32
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentlistresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentlistresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/RiskAssessmentListResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentlistresponse+json:
+              schema:
+                "$ref": "#/components/schemas/RiskAssessmentListResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+    post:
+      tags:
+      - RiskAssessment
+      summary: Initiate a risk assessment process manually.
+      description: "Used to initiate a fleet account's risk assessment manually.\r\nRequired
+        Role(s): Fleet.Account.Risk.Assessment.Create.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: Fleet Account ID - indetfier of which fleet account to access
+        required: true
+        schema:
+          type: string
+          description: Fleet Account ID - indetfier of which fleet account to access
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.asyncriskassessmentresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.asyncriskassessmentresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/AsyncRiskAssessmentResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.asyncriskassessmentresponse+json:
+              schema:
+                "$ref": "#/components/schemas/AsyncRiskAssessmentResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+    put:
+      tags:
+      - RiskAssessment
+      summary: Submit a risk assessment process result
+      description: "Used to transmit the result of a previously initiated risk assessment
+        request. <br />\r\nRequired Role(s): Fleet.Account.Risk.Assessment.Modify
+        <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: FAM internal fleet-account-identifier
+        required: true
+        schema:
+          type: string
+          description: FAM internal fleet-account-identifier
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentsubmitresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentsubmitrequest.v1+json:
+            schema:
+              "$ref": "#/components/schemas/RiskAssessmentSubmitRequestV1"
+          application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentsubmitrequest+json:
+            schema:
+              "$ref": "#/components/schemas/RiskAssessmentSubmitRequestV1"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentsubmitresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/RiskAssessmentSubmitResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentsubmitresponse+json:
+              schema:
+                "$ref": "#/components/schemas/RiskAssessmentSubmitResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '415':
+          description: UnsupportedMediaType
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/risk-assessments/{riskAssessmentId}":
+    get:
+      tags:
+      - RiskAssessment
+      summary: Get Risk Assessment Process Details
+      description: "Used to get the details and status of previously made risk assessment
+        process.<br />\r\nRequired Role(s): Fleet.Account.Risk.Assessment.Read <br
+        />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: Fleet Account ID - indetfier of which fleet account to access
+        required: true
+        schema:
+          type: string
+          description: Fleet Account ID - indetfier of which fleet account to access
+          nullable: true
+      - name: riskAssessmentId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/RiskAssessmentResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.riskassessmentresponse+json:
+              schema:
+                "$ref": "#/components/schemas/RiskAssessmentResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/signatories":
+    get:
+      tags:
+      - Signatories
+      summary: List Signatories
+      description: "Used to get a list of the signatories related to the fleet account.
+        The list output is according to VCC Cursor pagination specs.  <br />\r\nRequired
+        Role(s): Fleet.Account.Signatory.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: after
+        in: query
+        description: ''
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: limit
+        in: query
+        description: ''
+        schema:
+          type: integer
+          description: ''
+          format: int32
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.signatorylist.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.signatorylist.v1+json:
+              schema:
+                "$ref": "#/components/schemas/SignatoryListV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.signatorylist+json:
+              schema:
+                "$ref": "#/components/schemas/SignatoryListV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/{fleetAccountId}/signatories/{signatoryId}":
+    put:
+      tags:
+      - Signatories
+      summary: Update Signatories
+      description: "Used to update a signatory of the fleet account.   <br />\r\nRequired
+        Role(s): Fleet.Account.Signatory.Write <br />.  Claims:[none specified]."
+      parameters:
+      - name: fleetAccountId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: signatoryId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: string
+          description: ''
+          format: uuid
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.signatoryupdateresponse.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/vnd.volvocars.api.fleet.accounts.administration.signatoryupdaterequest.v1+json:
+            schema:
+              "$ref": "#/components/schemas/SignatoryUpdateRequestV1"
+          application/vnd.volvocars.api.fleet.accounts.administration.signatoryupdaterequest+json:
+            schema:
+              "$ref": "#/components/schemas/SignatoryUpdateRequestV1"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.signatoryupdateresponse.v1+json:
+              schema:
+                "$ref": "#/components/schemas/SignatoryUpdateResponseV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.signatoryupdateresponse+json:
+              schema:
+                "$ref": "#/components/schemas/SignatoryUpdateResponseV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '415':
+          description: UnsupportedMediaType
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '422':
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+  "/v1/fleetaccounts/users":
+    get:
+      tags:
+      - Users
+      summary: List Fleet Account Users
+      description: "Used to get list of the users (Volvo Account) related to the Fleet
+        Account. The list output is according to VCC Cursor pagination specs.  <br
+        />\r\nRequired Role(s): Fleet.Account.User.Read <br />.  Claims:[none specified]."
+      parameters:
+      - name: after
+        in: query
+        description: ''
+        schema:
+          type: string
+          description: ''
+          nullable: true
+      - name: limit
+        in: query
+        description: ''
+        schema:
+          type: integer
+          description: ''
+          format: int32
+          nullable: true
+      - name: fleetAccountId
+        in: query
+        description: ''
+        schema:
+          type: array
+          items:
+            type: string
+            nullable: true
+          description: ''
+          nullable: true
+      - name: Accept
+        in: header
+        description: The Accept request-header field is used to specify certain media
+          types which are acceptable for the response.
+        schema:
+          type: string
+          default: application/vnd.volvocars.api.fleet.accounts.administration.userlist.v1+json
+      - name: VCC-Api-OperationId
+        in: header
+        description: A transaction unique id which can be used do identify the transaction
+          in integrated systems.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/vnd.volvocars.api.fleet.accounts.administration.userlist.v1+json:
+              schema:
+                "$ref": "#/components/schemas/UserListV1"
+            application/vnd.volvocars.api.fleet.accounts.administration.userlist+json:
+              schema:
+                "$ref": "#/components/schemas/UserListV1"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/StringErrorResponse"
+        '406':
+          description: NotAcceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/ErrorData"
+                additionalProperties: false
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    format: int32
+                  operationId:
+                    type: string
+                    nullable: true
+                  error:
+                    "$ref": "#/components/schemas/StringErrorData"
+                additionalProperties: false
+      security:
+      - Volvo_Azure_AD: []
+components:
+  schemas:
+    Cursors:
+      type: object
+      properties:
+        before:
+          type: string
+          nullable: true
+        after:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CursorPagination:
+      type: object
+      properties:
+        cursors:
+          "$ref": "#/components/schemas/Cursors"
+        limit:
+          type: integer
+          format: int32
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        total:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AgreementData:
+      type: object
+      properties:
+        agreementId:
+          type: string
+          nullable: true
+        reviewDate:
+          type: string
+          format: date-time
+          nullable: true
+        expirationDate:
+          type: string
+          format: date-time
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        discountPlanId:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AgreementListV1:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/CursorPagination"
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/AgreementData"
+          nullable: true
+      additionalProperties: false
+    StringErrorData:
+      type: object
+      properties:
+        detail:
+          type: array
+          items:
+            type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    StringErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        error:
+          "$ref": "#/components/schemas/StringErrorData"
+      additionalProperties: false
+    ErrorData:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        error:
+          "$ref": "#/components/schemas/ErrorData"
+      additionalProperties: false
+    AgreementStatus:
+      enum:
+      - REVIEW
+      - APPROVED
+      - REJECTED
+      - EXPIRED
+      - CANCELLED
+      type: string
+    AgreementUpdateRequestV1:
+      type: object
+      properties:
+        status:
+          "$ref": "#/components/schemas/AgreementStatus"
+        reviewDate:
+          type: string
+          description: When the agreement needs to be reviewed. must be later than
+            current time.
+          format: date-time
+          nullable: true
+        expirationDate:
+          type: string
+          description: When the agreement will be expire. must be later than current
+            time.
+          format: date-time
+          nullable: true
+        startDate:
+          type: string
+          description: The start date of the agreement. Optional to set by UI if it's
+            not already set
+          format: date-time
+          nullable: true
+        discountPlanId:
+          type: string
+          nullable: true
+      additionalProperties: false
+    MessageResponseData:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AgreementUpdateResponseV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/MessageResponseData"
+      additionalProperties: false
+    Address:
+      type: object
+      properties:
+        line1:
+          type: string
+          nullable: true
+        line2:
+          type: string
+          nullable: true
+        line3:
+          type: string
+          nullable: true
+        line4:
+          type: string
+          nullable: true
+        locality:
+          type: string
+          nullable: true
+        countryCode:
+          type: string
+          nullable: true
+        postalCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Company:
+      type: object
+      properties:
+        address:
+          "$ref": "#/components/schemas/Address"
+        contactPhoneNumber:
+          type: string
+          nullable: true
+        contactEmailAddress:
+          type: string
+          nullable: true
+          deprecated: true
+        name:
+          type: string
+          nullable: true
+        organizationNumber:
+          type: string
+          nullable: true
+        taxIdentifier:
+          type: string
+          nullable: true
+        invoiceEmailAddress:
+          type: string
+          nullable: true
+        businessEmailAddress:
+          type: string
+          nullable: true
+        invoiceAddress:
+          "$ref": "#/components/schemas/Address"
+      additionalProperties: false
+    RiskAssessmentStatus:
+      enum:
+      - APPROVED
+      - DECLINED
+      - EXCEPTION
+      - CANCELLED
+      - EXPIRED
+      - MANUAL_REVIEW
+      - DUPLICATE_RECEIVED
+      type: string
+    AsyncOperationStatus:
+      enum:
+      - RUNNING
+      - FAILED
+      - COMPLETED
+      type: string
+    RiskAssessment:
+      type: object
+      properties:
+        receivedDate:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          "$ref": "#/components/schemas/RiskAssessmentStatus"
+        approvedNumberOfCars:
+          type: integer
+          format: int32
+          nullable: true
+        dateOfLimitDecision:
+          type: string
+          format: date-time
+          nullable: true
+        internalCreditRiskRating:
+          type: integer
+          format: int32
+          nullable: true
+        limitApprovalExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+        eventId:
+          type: string
+          nullable: true
+        errorMessage:
+          type: string
+          nullable: true
+        errorCode:
+          type: string
+          nullable: true
+        reasons:
+          type: array
+          items:
+            type: string
+          nullable: true
+        operationStatus:
+          "$ref": "#/components/schemas/AsyncOperationStatus"
+        riskRequestId:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FinancialDetails:
+      type: object
+      properties:
+        approvedLimit:
+          type: integer
+          format: int32
+          nullable: true
+        approvedType:
+          type: string
+          nullable: true
+        approvedDate:
+          type: string
+          format: date-time
+          nullable: true
+        expirationDateOfLimit:
+          type: string
+          format: date-time
+          nullable: true
+        latestRiskAssessment:
+          "$ref": "#/components/schemas/RiskAssessment"
+        bankDetailsSubmitted:
+          type: boolean
+        internalCreditRiskRating:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FleetAccountStatus:
+      enum:
+      - APPROVED
+      - CANCELED
+      - CREDIT_REVIEW
+      - CREDIT_REVIEW_MANUAL
+      - DISABLED
+      - REJECTED
+      - SALES_REVIEW
+      type: string
+    StatusChangeItem:
+      type: object
+      properties:
+        status:
+          "$ref": "#/components/schemas/FleetAccountStatus"
+        timestamp:
+          type: string
+          format: date-time
+        changedBy:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FleetAccountData:
+      type: object
+      properties:
+        cdbId:
+          type: integer
+          format: int64
+          nullable: true
+        company:
+          "$ref": "#/components/schemas/Company"
+        created:
+          type: string
+          format: date-time
+        desiredFleetSize:
+          type: integer
+          format: int32
+        financialDetails:
+          "$ref": "#/components/schemas/FinancialDetails"
+        fleetAccountId:
+          type: string
+          nullable: true
+        legalEntityId:
+          type: integer
+          description: XDM reference Id
+          format: int64
+          nullable: true
+        parentAccountId:
+          type: string
+          nullable: true
+        sellableMarket:
+          type: string
+          nullable: true
+        status:
+          "$ref": "#/components/schemas/FleetAccountStatus"
+        totalFleetSize:
+          type: integer
+          format: int32
+        statusHistory:
+          type: array
+          items:
+            "$ref": "#/components/schemas/StatusChangeItem"
+          nullable: true
+      additionalProperties: false
+    FleetAccountListV1:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/CursorPagination"
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FleetAccountData"
+          nullable: true
+      additionalProperties: false
+    FleetAccountV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/FleetAccountData"
+      additionalProperties: false
+    CompanyUpdate:
+      type: object
+      properties:
+        address:
+          "$ref": "#/components/schemas/Address"
+        name:
+          type: string
+          nullable: true
+        contactPhoneNumber:
+          type: string
+          nullable: true
+        contactEmailAddress:
+          type: string
+          nullable: true
+          deprecated: true
+        invoiceAddress:
+          "$ref": "#/components/schemas/Address"
+        invoiceEmailAddress:
+          type: string
+          nullable: true
+        businessEmailAddress:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FleetAccountUpdateRequestV1:
+      type: object
+      properties:
+        totalFleetSize:
+          type: integer
+          format: int32
+          nullable: true
+        status:
+          "$ref": "#/components/schemas/FleetAccountStatus"
+        cdbId:
+          type: integer
+          format: int64
+          nullable: true
+        company:
+          "$ref": "#/components/schemas/CompanyUpdate"
+      additionalProperties: false
+    OrganizationalUnitType:
+      enum:
+      - MAIN
+      - SUB
+      type: string
+    OrganizationalUnitData:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Address"
+          nullable: true
+        businessEmailAddresses:
+          type: array
+          items:
+            type: string
+          nullable: true
+        invoiceEmailAddresses:
+          type: array
+          items:
+            type: string
+          nullable: true
+        organizationalUnitId:
+          type: string
+          description: Fleet Account organizational unit id
+          nullable: true
+        organizationalId:
+          type: integer
+          description: XDM Reference Id
+          format: int64
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        type:
+          "$ref": "#/components/schemas/OrganizationalUnitType"
+      additionalProperties: false
+    OrganizationalUnitListV1:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/CursorPagination"
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/OrganizationalUnitData"
+          nullable: true
+      additionalProperties: false
+    FleetAccountSearchRequestV1:
+      type: object
+      properties:
+        organizationalUnitIds:
+          type: array
+          items:
+            type: string
+          nullable: true
+        sellableMarkets:
+          type: array
+          items:
+            type: string
+          nullable: true
+        statuses:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FleetAccountStatus"
+          nullable: true
+      additionalProperties: false
+    CreateInviteRequestV1:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreateInviteResponseV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/MessageResponseData"
+      additionalProperties: false
+    RiskAssessmentListResponseV1:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/CursorPagination"
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/RiskAssessment"
+          nullable: true
+      additionalProperties: false
+    AsyncInitiateBody:
+      type: object
+      properties:
+        href:
+          type: string
+          nullable: true
+        expires:
+          type: string
+          format: date-time
+          nullable: true
+        id:
+          type: string
+          nullable: true
+        status:
+          "$ref": "#/components/schemas/AsyncOperationStatus"
+      additionalProperties: false
+    AsyncRiskAssessmentResponseV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        async:
+          "$ref": "#/components/schemas/AsyncInitiateBody"
+      additionalProperties: false
+    RiskAssessmentSubmitRequestV1:
+      required:
+      - riskRequestId
+      - status
+      type: object
+      properties:
+        riskRequestId:
+          type: string
+          description: The riskRequestId value fetched when the process is initiated.
+        status:
+          "$ref": "#/components/schemas/RiskAssessmentStatus"
+        reasons:
+          type: array
+          items:
+            type: string
+          nullable: true
+        applicationId:
+          type: string
+          nullable: true
+        approvedCountOfCars:
+          type: integer
+          format: int32
+          nullable: true
+        dateOfLimitDecision:
+          type: string
+          format: date-time
+          nullable: true
+        internalCreditRiskRating:
+          type: integer
+          format: int32
+          nullable: true
+        limitApprovalExpirationDate:
+          type: string
+          format: date-time
+          nullable: true
+        eventId:
+          type: string
+          nullable: true
+        receivedDate:
+          type: integer
+          format: int64
+        errorMessage:
+          type: string
+          nullable: true
+        errorCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RiskAssessmentSubmitResponseV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/MessageResponseData"
+      additionalProperties: false
+    RiskAssessmentResponseV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/RiskAssessment"
+      additionalProperties: false
+    SignatoryStatus:
+      enum:
+      - APPROVED
+      - PENDING
+      - REJECTED
+      type: string
+    SignatoryType:
+      enum:
+      - OFFICIAL
+      - ON_BEHALF_OF
+      type: string
+    Signatory:
+      type: object
+      properties:
+        dateOfBirth:
+          type: string
+          format: date-time
+          nullable: true
+        legalIndividualId:
+          type: integer
+          format: int64
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        nationalIdentifier:
+          type: string
+          nullable: true
+        nationalIdentifierIdentifierType:
+          type: string
+          nullable: true
+        signatoryStatus:
+          "$ref": "#/components/schemas/SignatoryStatus"
+        signatoryId:
+          type: string
+          nullable: true
+        signatoryType:
+          "$ref": "#/components/schemas/SignatoryType"
+        volvoId:
+          type: string
+          nullable: true
+        emailAddress:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SignatoryListV1:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/CursorPagination"
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Signatory"
+          nullable: true
+      additionalProperties: false
+    SignatoryUpdateRequestV1:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The firstname of the signatory e.g owner of the company
+          nullable: true
+        lastName:
+          type: string
+          description: The LastName of the signatory e.g owner of the company
+          nullable: true
+        nationalIdentifier:
+          type: string
+          description: Encrypted national identifier for example Personal Number
+          nullable: true
+        identifierType:
+          type: string
+          description: national Identifier Type for example Personal number
+          nullable: true
+        signatoryStatus:
+          "$ref": "#/components/schemas/SignatoryStatus"
+      additionalProperties: false
+    SignatoryUpdateResponseV1:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/MessageResponseData"
+      additionalProperties: false
+    FleetRole:
+      enum:
+      - FLEET_ADMIN
+      - FLEET_USER
+      type: string
+    FleetUserReference:
+      type: object
+      properties:
+        referenceId:
+          type: string
+          nullable: true
+        role:
+          "$ref": "#/components/schemas/FleetRole"
+      additionalProperties: false
+    UserData:
+      type: object
+      properties:
+        fleetAccountReferences:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FleetUserReference"
+          nullable: true
+        organizationalUnitReferences:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FleetUserReference"
+          nullable: true
+        volvoId:
+          type: string
+          nullable: true
+        created:
+          type: string
+          format: date-time
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        emailAddress:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UserListV1:
+      type: object
+      properties:
+        pagination:
+          "$ref": "#/components/schemas/CursorPagination"
+        status:
+          type: integer
+          format: int32
+        operationId:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserData"
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Volvo_Azure_AD:
+      type: http
+      description: A valid access token from the Volvo_Azure_AD. Currently only supports
+        the client credentials flow.
+      scheme: bearer
+      bearerFormat: JWT
