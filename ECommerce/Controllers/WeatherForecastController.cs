@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Collections;
+using ECommerce.Models;
 
 namespace ECommerce.Controllers
 {
@@ -23,10 +21,10 @@ namespace ECommerce.Controllers
             _logger = logger;
         }
 
-        [HttpGet("/product/{id}")]
-        public Object Get(string id)
+        [HttpGet("/products/{id}")]
+        public Product Get(string id)
         {
-            return new
+            return new Product
             {
                 id = id,
                 type = "CREDIT_CARD",
@@ -36,14 +34,14 @@ namespace ECommerce.Controllers
         }
 
         [HttpGet]
-        public Object Products()
+        public Product[] Products()
         {
-            return new[]{new {
-                id = 1,
+            return new[]{new Product{
+                id = "1",
                 type = "CREDIT_CARD",
                 name = "28 Degrees"
-            },new {
-                id = 2,
+            },new Product{
+                id = "2",
                 type = "CREDIT_CARD",
                 name = "Apple"
             }}
