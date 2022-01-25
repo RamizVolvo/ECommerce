@@ -36,11 +36,13 @@ namespace ECommerce.Controllers
         [HttpGet]
         public Product[] Products()
         {
-            return new[]{new Product{
+            return new[]{
+            new Product{
                 id = "1",
                 type = "CREDIT_CARD",
                 name = "28 Degrees"
-            },new Product{
+            },  
+            new Product{
                 id = "2",
                 type = "CREDIT_CARD",
                 name = "Apple"

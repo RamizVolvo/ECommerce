@@ -8,8 +8,8 @@ OAS=$(cat ./wwwroot/swagger/v1/fam.yaml | base64 -w 0)
 version="$(git rev-parse --short HEAD)"
 #echo -n "$OAS"
 REPORT=$(cat ./Report.txt | base64)
-PACT_BROKER_TOKEN=oFp-wMAJuWO6XxtRfFBsOA
-PACT_BROKER_BASE_URL=https://volvo.pactflow.io
+PACT_BROKER_TOKEN=GVvEOnzlEUgaxstFITNxgw
+PACT_BROKER_BASE_URL=https://volvocars-test.pactflow.io
 PACTICIPANT=FleetAccountsAdministration
 
 echo "==> Uploading OAS to Pactflow"
